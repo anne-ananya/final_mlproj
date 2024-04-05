@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ML API</title>
+<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .login {
+        width: 400px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        position: relative; /* Added */
+    }
+
+    .login h1 {
+        text-align: center;
+        color: #333;
+        font-family: 'Pacifico';
+        margin-bottom: 40px;
+    }
+
+    .login input[type="text"] {
+        width: calc(100% - 40px);
+        height: 40px;
+        padding: 0 20px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        outline: none;
+        font-family: 'Arimo';
+    }
+
+    .login button {
+        width: 100%;
+        height: 40px;
+        border: none;
+        border-radius: 20px;
+        background: rgb(34, 193, 195);
+        background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+        color: #fff;
+        font-family: 'Arimo';
+        font-size: 16px;
+        cursor: pointer;
+        overflow-y: auto;
+        max-height: 80px; /* Adjust height as needed */
+        padding: 0 20px;
+        margin-bottom: 20px;
+    }
+
+    .login button::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .login button::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .login button::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 5px;
+    }
+
+    .login button:hover {
+        background: #35a8e0;
+    }
+
+    /* Popup styles */
+    .popup {
+        position: absolute;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        padding: 10px;
+        z-index: 1;
+        display: none;
+        top: 300px; /* Adjust as needed */
+        right: 0; /* Adjust as needed */
+    }
+
+    .career-aspiration:hover + .popup {
+        display: block;
+    }
+
+    .see-more {
+        text-align: right;
+        cursor: pointer;
+        color: rgb(66, 66, 86);
+        text-decoration: underline;
+    }
+</style>
+
+</head>
+
+<body>
+ <div class="login">
+	<h1>Student Score Prediction</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="/submit" method="post">
+
+        <input type="text" name="part_time_job(0/1)" placeholder="part_time_job(0/1)" required="required" /><br>
+
+        <input type="text" name="absence_days" placeholder="absence_days" required="required" /><br>
+
+        <input type="text" name="extracurricular activities(0/1)" placeholder="extracurricular activities(0/1)" required="required" /><br>
+
+    	<input type="text" name="math_score" placeholder="math_score" required="required" /><br>
+
+        <input type="text" name="history_score" placeholder="history_score" required="required" /><br>
+
+        <input type="text" name="physics_score" placeholder="physics_score" required="required" /><br>
+        
+        <input type="text" name="chemistry_score" placeholder="chemistry_score" required="required" /><br>
+
+        <input type="text" name="biology_score" placeholder="biology_score" required="required" /><br>
+
+        <input type="text" name="english_score" placeholder="english_score" required="required" /><br>
+
+        <input type="text" name="geography_score" placeholder="geography_score" required="required" /><br>
+
+        <input type="text" name="gender(0-male,1-female)" placeholder="gender(0-male,1-female)" required="required" /><br>
+        
+        <input type="text" name="career_aspiration(0-Accountant, 1-Artist, 2-Banker, 3-Buiseness Owner, 4-Construction Engineer, 5-Designer, 6- Doctor, 7- Game Developer, 8-Government Officer, 9-Lawyer, 10-Real Estate Developer, 11-Scientist, 12-Software Engineer, 13-Stock Investor, 14-Teacher, 15-Unknown, 16-Writer)" placeholder="career_aspiration(0-Accountant, 1-Artist, 2-Banker, 3-Buiseness Owner, 4-Construction Engineer, 5-Designer, 6- Doctor, 7- Game Developer, 8-Government Officer, 9-Lawyer, 10-Real Estate Developer, 11-Scientist, 12-Software Engineer, 13-Stock Investor, 14-Teacher, 15-Unknown, 16-Writer)" class="career-aspiration" required="required" /><br>
+        
+        <!-- Popup -->
+        <div class="popup">
+            <p>1-Accountant</p>
+            <p>2-Artist</p>
+            <p>3-Banker</p>
+            <p>4-Buiseness Owner</p>
+            <p>5-Construction Engineer</p>
+            <p>6-Designer</p>
+            <p>7-Doctor</p>
+            <p>8-Game Developer</p>
+            <p>9-Government Officer</p>
+            <p>10-Lawyer</p>
+            <p>11-Real Estate Developer</p>
+            <p>12-Scientist</p>
+            <p>13-Software Engineer</p>
+            <p>14-Stock Investor</p>
+            <p>15-Teacher</p>
+            <p>16-Unknown</p>
+            <p>17-Writer</p>
+        </div>
+        
+        <div class="see-more" onclick="showPopup()">See more</div>
+      
+        <button type="submit">submit</button>
+        
+    </form>
+ </div>
+
+<script>
+    function showPopup() {
+        const popup = document.querySelector('.popup');
+        popup.style.display = 'block';
+        setTimeout(function() {
+            popup.style.display = 'none';
+        }, 6000); // 5 seconds timeout
+    }
+</script>
+
+</body>
+</html>
